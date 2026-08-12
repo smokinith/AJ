@@ -1,0 +1,27 @@
+# Generated single-file bundle. Built from index.html + assets/ by the artifact
+# build script; 200KB+ of inlined base64 fonts. Source is the truth, not this.
+aj-holidays-artifact.html
+
+# Dependencies (Vitest + Playwright arrive with task T6 of PLAN.md)
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Test + build output
+/test-results/
+/playwright-report/
+/coverage/
+/dist/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Google Drive sync artifacts (this project currently lives inside Drive)
+*.gdoc
+*.gsheet
+*~

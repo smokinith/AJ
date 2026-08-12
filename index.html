@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>AJ Holidays — Bespoke Journeys, Engineered from Bengaluru</title>
+<meta name="description" content="AJ Holidays is a boutique travel studio in HSR Layout, Bengaluru. Curated international and domestic holiday packages, custom itineraries, visas and end-to-end trip design." />
+<meta name="theme-color" content="#0B0F19" />
+
+<meta property="og:title" content="AJ Holidays — Bespoke Journeys, Engineered from Bengaluru" />
+<meta property="og:description" content="Boutique travel studio in HSR Layout. Curated packages to Bali, Maldives, Switzerland, Dubai, Thailand and beyond." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<!--
+  ┌───────────────────────────────────────────────────────────────────────┐
+  │  PLACEHOLDER DATA — NOT SAFE TO PUBLISH AS-IS                         │
+  │                                                                       │
+  │  Invented trust claims have been removed. These remain placeholders   │
+  │  and must be replaced with real values before this reaches customers: │
+  │                                                                       │
+  │    · Phone / WhatsApp  +91 98765 43210   (also WA_NUMBER in app.js)   │
+  │    · Email             hello@ajholidays.in                            │
+  │    · Street address    27th Main Rd, Sector 2, HSR Layout             │
+  │    · All 8 packages    prices, inclusions, night counts (scene.js)    │
+  │                                                                       │
+  │  The enquiry form has no backend. Submitting opens a pre-filled       │
+  │  WhatsApp message; if the popup is blocked the enquiry is lost. See   │
+  │  PLAN.md task T2.                                                     │
+  └───────────────────────────────────────────────────────────────────────┘
+-->
+<a class="skip-link" href="#packages">Skip to packages</a>
+
+<!-- ══════════════════════════════ LOADER ══════════════════════════════ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__inner">
+    <div class="loader__mark">AJ</div>
+    <div class="loader__bar"><i id="loaderFill"></i></div>
+    <div class="loader__meta mono"><span id="loaderPct">00</span>% &nbsp;·&nbsp; CALIBRATING ORBIT</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ FIXED 3D SCENE CANVAS ══════════════════════ -->
+<canvas id="scene" class="scene" aria-hidden="true"></canvas>
+<div class="scene-vignette" aria-hidden="true"></div>
+<div class="scene-grain" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════ NAV ═════════════════════════════════ -->
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top">
+    <span class="nav__logo" aria-hidden="true">
+      <svg viewBox="0 0 32 32" width="30" height="30"><circle cx="16" cy="16" r="14" fill="none" stroke="url(#g1)" stroke-width="1.2"/><ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="url(#g1)" stroke-width="0.8" opacity=".55"/><path d="M2.6 16h26.8" stroke="url(#g1)" stroke-width="0.8" opacity=".55"/><circle cx="23.4" cy="9.2" r="2.1" fill="#00F2FE"/><defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#00F2FE"/><stop offset="1" stop-color="#C98A4B"/></linearGradient></defs></svg>
+    </span>
+    <span class="nav__word">AJ&nbsp;Holidays<em class="mono">HSR LAYOUT · BLR</em></span>
+  </a>
+
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#packages">Packages</a>
+    <a href="#builder">Build a trip</a>
+    <a href="#studio">Studio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <a class="btn btn--ghost nav__cta" href="#contact">
+    <span>Plan my trip</span>
+    <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+
+  <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+</header>
+
+<main id="top">
+
+<!-- ══════════════════════════════ HERO ════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero__inner">
+    <p class="eyebrow mono reveal">◦ BOUTIQUE TRAVEL STUDIO · HSR LAYOUT, BENGALURU</p>
+    <h1 class="hero__title reveal">
+      We don't sell tickets.<br />
+      We <span class="grad">engineer journeys.</span>
+    </h1>
+    <p class="hero__sub reveal">
+      A boutique travel studio in HSR Layout designing precision itineraries for travellers
+      flying out of Bengaluru — visas, stays, transfers and the small details, handled.
+    </p>
+    <div class="hero__actions reveal">
+      <a class="btn btn--solid" href="#packages">
+        <span>Explore destinations</span>
+        <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn btn--ghost" href="#builder"><span>Build a custom trip</span></a>
+    </div>
+
+    <!--
+      REAL CREDENTIALS GO HERE.
+
+      A stats row previously sat in this spot with invented figures (travellers
+      flown, countries, years in HSR, visa success rate). All of it was made up
+      to fill the layout, so it was removed rather than shipped.
+
+      To restore it, supply figures you can actually stand behind and re-add:
+
+        <ul class="hero__stats reveal">
+          <li><b data-count="NNN">0</b><span class="mono">LABEL</span></li>
+        </ul>
+
+      The .hero__stats styles and the JS counter (app.js, [data-count]) are both
+      still in place, so real numbers will animate with no further work.
+      Registration numbers and verifiable memberships belong here too.
+    -->
+  </div>
+
+  <div class="hero__scroll mono" aria-hidden="true">
+    <span>SCROLL TO DESCEND</span>
+    <i></i>
+  </div>
+
+  <div class="hero__ticker mono" aria-hidden="true">
+    <div class="hero__ticker-track" id="ticker"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SCROLL PHASE 1 — CAMERA FLY-IN ═════════════════ -->
+<section class="journey" id="journey">
+  <div class="journey__sticky">
+    <div class="journey__caption" data-cap="0">
+      <p class="eyebrow mono">◦ PHASE 01 — DEPARTURE</p>
+      <h2>Every trip starts as<br />a point on a sphere.</h2>
+      <p class="lede">Kempegowda International · BLR · 13.1986° N, 77.7066° E</p>
+    </div>
+
+    <div class="journey__caption" data-cap="1">
+      <p class="eyebrow mono">◦ PHASE 02 — DESCENT</p>
+      <h2>Then it becomes<br />somewhere real.</h2>
+      <p class="lede">We build the ground game — the villa, the driver, the 6 a.m. boat.</p>
+    </div>
+
+    <div class="journey__caption" data-cap="2">
+      <p class="eyebrow mono">◦ PHASE 03 — ARRIVAL</p>
+      <h2>Bali.<br />Six nights.</h2>
+      <p class="lede">Ubud jungle canopy → Seminyak coastline → Nusa Penida day sail.</p>
+    </div>
+
+    <div class="journey__hud mono" aria-hidden="true">
+      <div class="hud__row"><span>ALT</span><b id="hudAlt">36 000 ft</b></div>
+      <div class="hud__row"><span>HDG</span><b id="hudHdg">118°</b></div>
+      <div class="hud__row"><span>DST</span><b id="hudDst">5 812 km</b></div>
+      <div class="hud__bar"><i id="hudFill"></i></div>
+    </div>
+
+    <!-- Immersive/Interactive pattern requires an escape hatch for
+         impatient users; also the keyboard exit from the pinned sequence. -->
+    <a class="btn btn--ghost journey__skip" href="#packages" id="skipIntro">
+      <span>Skip intro</span>
+      <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M4 3l5 5-5 5M11 3v10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════ SCROLL PHASE 2 — BENTO PACKAGE GRID ════════════════ -->
+<section class="section packages" id="packages">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="eyebrow mono">◦ CURATED INVENTORY · 2026 SEASON</p>
+      <h2 class="sec-title">Signature <span class="grad">packages</span></h2>
+      <p class="sec-lede">
+        Fixed-departure and private itineraries, priced ex-Bengaluru. Hover a destination to
+        pull it into the viewport behind you.
+      </p>
+    </header>
+
+    <div class="bento" id="bento"><!-- injected --></div>
+
+    <p class="packages__foot mono reveal">
+      ◦ ALL FARES ARE PER PERSON ON TWIN SHARING · EX-BLR · EXCLUSIVE OF GST &amp; TCS · SUBJECT TO AVAILABILITY
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ SCROLL PHASE 3 — CUSTOM ITINERARY BUILDER ═══════════════ -->
+<section class="section builder" id="builder">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="eyebrow mono">◦ PARAMETRIC TRIP DESIGN</p>
+      <h2 class="sec-title">Build it <span class="grad">your way</span></h2>
+      <p class="sec-lede">Move the parameters. The world behind you re-lights in real time.</p>
+    </header>
+
+    <div class="builder__grid reveal">
+
+      <div class="panel builder__controls">
+        <div class="ctrl">
+          <label for="dur">
+            <span class="mono">DURATION</span>
+            <b id="durOut" class="mono">6 nights</b>
+          </label>
+          <input type="range" id="dur" min="3" max="16" step="1" value="6" />
+          <div class="ctrl__scale mono"><span>3N</span><span>16N</span></div>
+        </div>
+
+        <div class="ctrl">
+          <label for="bud">
+            <span class="mono">BUDGET / PERSON</span>
+            <b id="budOut" class="mono">₹75,000</b>
+          </label>
+          <input type="range" id="bud" min="25000" max="400000" step="5000" value="75000" />
+          <div class="ctrl__scale mono"><span>₹25K</span><span>₹4L</span></div>
+        </div>
+
+        <div class="ctrl">
+          <label for="pax">
+            <span class="mono">TRAVELLERS</span>
+            <b id="paxOut" class="mono">2 adults</b>
+          </label>
+          <input type="range" id="pax" min="1" max="12" step="1" value="2" />
+          <div class="ctrl__scale mono"><span>1</span><span>12</span></div>
+        </div>
+
+        <div class="ctrl ctrl--seg">
+          <span class="mono ctrl__label">TRAVEL STYLE</span>
+          <div class="seg" id="styleSeg" role="tablist" aria-label="Travel style">
+            <button role="tab" class="is-on" data-style="beach">Beach</button>
+            <button role="tab" data-style="alpine">Alpine</button>
+            <button role="tab" data-style="city">City</button>
+            <button role="tab" data-style="wild">Wild</button>
+            <button role="tab" data-style="heritage">Heritage</button>
+          </div>
+        </div>
+
+        <div class="ctrl ctrl--seg">
+          <span class="mono ctrl__label">PACE</span>
+          <div class="seg seg--sm" id="paceSeg" role="tablist" aria-label="Pace">
+            <button role="tab" data-pace="slow">Slow</button>
+            <button role="tab" class="is-on" data-pace="balanced">Balanced</button>
+            <button role="tab" data-pace="packed">Packed</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel builder__out" id="builderOut">
+        <div class="bo__head">
+          <div>
+            <p class="mono bo__id" id="boId">AJH-CUSTOM-0000</p>
+            <h3 id="boName">Bali · Indonesia</h3>
+            <p class="bo__tag mono" id="boTag">BEST MATCH · 94% FIT</p>
+          </div>
+          <div class="bo__price">
+            <b id="boPrice">₹68,999</b>
+            <span class="mono">EST. PER PERSON</span>
+          </div>
+        </div>
+
+        <div class="bo__meter" aria-hidden="true"><i id="boMeter"></i></div>
+
+        <ol class="bo__days" id="boDays"><!-- injected --></ol>
+
+        <div class="bo__foot">
+          <div class="bo__totals mono">
+            <span>PARTY TOTAL</span><b id="boTotal">₹1,37,998</b>
+          </div>
+          <button class="btn btn--solid" id="boSend">
+            <span>Send this to AJ</span>
+            <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <p class="bo__alts mono" id="boAlts"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════ STUDIO ═══════════════════════════════ -->
+<section class="section studio" id="studio">
+  <div class="wrap studio__grid">
+    <div class="reveal">
+      <p class="eyebrow mono">◦ THE STUDIO</p>
+      <h2 class="sec-title">A travel desk that<br />actually picks up.</h2>
+      <p class="sec-lede">
+        AJ Holidays runs out of a small office in HSR Layout Sector 2 — close enough that most of
+        our clients walk in. We handle the unglamorous parts properly: visa files that don't get
+        rejected, layovers that aren't 9 hours, and a human on WhatsApp while you're abroad.
+      </p>
+      <ul class="studio__list">
+        <li><b>Ex-BLR specialists</b><span>Routing, fare rules and airport transfers built around Kempegowda.</span></li>
+        <li><b>Visa documentation desk</b><span>Schengen, UK, US, Japan, Australia — file prep, appointments, cover letters.</span></li>
+        <li><b>On-trip support</b><span>One WhatsApp thread, one named coordinator, IST and destination hours.</span></li>
+        <li><b>Corporate &amp; MICE</b><span>Offsites, incentive travel and group departures for Bengaluru teams.</span></li>
+      </ul>
+    </div>
+
+    <aside class="panel studio__card reveal">
+      <p class="mono studio__card-k">◦ COORDINATES</p>
+      <address>
+        AJ Holidays<br />
+        27th Main Road, Sector 2<br />
+        HSR Layout, Bengaluru 560102<br />
+        Karnataka, India
+      </address>
+      <dl class="studio__dl mono">
+        <div><dt>PHONE</dt><dd><a href="tel:+919876543210">+91 98765 43210</a></dd></div>
+        <div><dt>MAIL</dt><dd><a href="mailto:hello@ajholidays.in">hello@ajholidays.in</a></dd></div>
+        <div><dt>HOURS</dt><dd>MON–SAT · 10:00–19:30 IST</dd></div>
+        <div><dt>GEO</dt><dd>12.9121° N, 77.6446° E</dd></div>
+      </dl>
+      <a class="btn btn--ghost btn--full" href="https://wa.me/919876543210" target="_blank" rel="noopener">
+        <span>Message us on WhatsApp</span>
+      </a>
+    </aside>
+  </div>
+</section>
+
+<!-- ═════════════════════════════ CONTACT ══════════════════════════════ -->
+<section class="section contact" id="contact">
+  <div class="wrap contact__grid">
+    <header class="reveal">
+      <p class="eyebrow mono">◦ FLIGHT PLAN REQUEST</p>
+      <h2 class="sec-title">Tell us where,<br />we'll do the rest.</h2>
+      <p class="sec-lede">
+        Send the brief and a coordinator responds within one working day with a costed
+        itinerary — no call-centre, no drip campaign.
+      </p>
+    </header>
+
+    <form class="panel contact__form reveal" id="leadForm" novalidate>
+      <div class="field" data-field>
+        <label for="fName" class="mono">FULL NAME</label>
+        <input id="fName" name="name" type="text" autocomplete="name" required
+               aria-describedby="eName" placeholder="Ananya Rao" />
+        <p class="err mono" id="eName">◦ NAME IS REQUIRED</p>
+      </div>
+      <div class="field-row">
+        <div class="field" data-field>
+          <label for="fPhone" class="mono">PHONE</label>
+          <input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required
+                 aria-describedby="ePhone" placeholder="+91 …" />
+          <p class="err mono" id="ePhone">◦ ENTER A VALID 10-DIGIT NUMBER</p>
+        </div>
+        <div class="field" data-field>
+          <label for="fMail" class="mono">EMAIL</label>
+          <input id="fMail" name="email" type="email" autocomplete="email"
+                 aria-describedby="eMail" placeholder="you@domain.com" />
+          <p class="err mono" id="eMail">◦ CHECK THE EMAIL FORMAT</p>
+        </div>
+      </div>
+      <div class="field">
+        <label for="fDest" class="mono">DESTINATION / INTEREST</label>
+        <input id="fDest" name="destination" type="text" placeholder="Bali, or surprise me" />
+      </div>
+      <div class="field">
+        <label for="fMsg" class="mono">BRIEF</label>
+        <textarea id="fMsg" name="message" rows="4" placeholder="Dates, party size, budget, anything non-negotiable…"></textarea>
+      </div>
+
+      <button class="btn btn--solid btn--full" type="submit">
+        <span>Send the brief</span>
+        <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <p class="form-note mono" id="formNote" role="status" aria-live="polite">
+        ◦ NO BACKEND WIRED — SUBMIT OPENS A PRE-FILLED WHATSAPP MESSAGE
+      </p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div>
+      <p class="footer__mark">AJ Holidays</p>
+      <p class="footer__line">Boutique travel studio · HSR Layout, Bengaluru</p>
+    </div>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="#packages">Packages</a>
+      <a href="#builder">Trip builder</a>
+      <a href="#studio">Studio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <p class="footer__legal mono">
+      © <span id="yr">2026</span> AJ HOLIDAYS · ALL FARES INDICATIVE · T&amp;C APPLY
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/scene.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
