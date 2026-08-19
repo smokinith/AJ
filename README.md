@@ -12,15 +12,24 @@ python -m http.server 5173 --directory aj-holidays
 
 ---
 
+## Contact details (real)
+
+| What | Where | Value |
+|---|---|---|
+| Phone / WhatsApp | `assets/js/app.js` → `WA_NUMBER`, `index.html` | `+91 90609 05030` |
+| Alternate line | `index.html` (studio card) | `+91 99808 00931` |
+| Email | `index.html` (studio card) | `ajholidaybangalore@gmail.com` |
+
+Enquiries route to the WhatsApp line above. To send leads to the alternate
+number instead, change `WA_NUMBER` in `assets/js/app.js`.
+
 ## ⚠️ Placeholder data — replace before launch
 
 Everything below is invented and must be swapped for real business details:
 
 | What | Where | Current value |
 |---|---|---|
-| Phone / WhatsApp | `assets/js/app.js` → `WA_NUMBER`, `index.html` | `+91 98765 43210` |
-| Email | `index.html` (studio card) | `hello@ajholidays.in` |
-| Street address | `index.html` (studio card) | 27th Main Rd, Sector 2, HSR Layout |
+| Street address | `index.html` (studio card) | omitted on purpose — invented value removed, add the real one |
 | All 8 packages: prices, inclusions, night counts | `assets/js/scene.js` → `DEST` | invented, indicative only |
 
 **Removed in T1 (do not reintroduce without real figures):** the hero stats row

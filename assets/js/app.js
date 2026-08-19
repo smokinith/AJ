@@ -23,7 +23,9 @@
                  (navigator.hardwareConcurrency || 8) <= 4 ||
                  (navigator.deviceMemory || 8) <= 4;
 
-  var WA_NUMBER = '919876543210';           /* placeholder — swap for the real line */
+  /* Enquiries route to this WhatsApp line. Alternate line is +91 99808 00931
+     (shown on the studio card); swap the digits here to reroute leads. */
+  var WA_NUMBER = '919060905030';
 
   var DEST = window.AJScene.destinations;
   var inr = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
