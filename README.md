@@ -12,6 +12,40 @@ python -m http.server 5173 --directory aj-holidays
 
 ---
 
+## Deploy
+
+Live domain: **ajholiday.in** (registered at GoDaddy).
+
+The site is static, so any host that serves files works. `CNAME` is present for
+GitHub Pages; Cloudflare Pages and Netlify ignore it harmlessly.
+
+**GitHub Pages** — Settings → Pages → Deploy from a branch → `main` / `(root)`.
+Set the custom domain to `ajholiday.in` and tick Enforce HTTPS. Requires the
+repo to stay **public** on the free plan.
+
+**GoDaddy DNS** (apex + www):
+
+| Type | Name | Value |
+|---|---|---|
+| A | @ | 185.199.108.153 |
+| A | @ | 185.199.109.153 |
+| A | @ | 185.199.110.153 |
+| A | @ | 185.199.111.153 |
+| CNAME | www | smokinith.github.io |
+
+Delete GoDaddy's default parking A record for `@` first, or it will conflict.
+DNS takes 10 minutes to a few hours; the HTTPS certificate is issued after DNS
+resolves, so Enforce HTTPS may be greyed out until then.
+
+**Cloudflare Pages** is the better option if you want the repo private, and is
+faster in India. It needs a Cloudflare account and moving nameservers off GoDaddy.
+
+Production files: `favicon.svg`, `robots.txt`, `sitemap.xml`, `404.html`,
+`assets/img/og-image.jpg` (1200×630 social card, rendered from the live globe).
+`index.html` carries canonical, Open Graph, Twitter card, and `TravelAgency`
+JSON-LD containing only verifiable facts (name, area, contact, hours) — no
+ratings, awards, or accreditations.
+
 ## Contact details (real)
 
 | What | Where | Value |
