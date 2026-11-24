@@ -59,6 +59,7 @@ body{
 }
 
 img,svg{ max-width:100%; display:block; }
+[hidden]{ display:none !important; }   /* beats any component display rule */
 
 .mono{
   font-family:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -659,6 +660,62 @@ input[type=range]:active::-webkit-slider-thumb{ transform:scale(1.12); }
 
 .form-note{ color:var(--fg-dim); margin:var(--space-md) 0 0; text-align:center; line-height:1.7; }
 .form-note.is-ok{ color:var(--cyan); }
+.form-note.is-bad{ color:var(--bad); }
+
+/* ── Handoff panel (shown after a valid submit) ──────────────────────── */
+.handoff{ margin-top:var(--space-md); }
+.handoff[hidden]{ display:none; }
+.handoff__k{ color:var(--cyan); margin:0 0 var(--space-md); }
+.handoff h3{
+  font-size:clamp(1.4rem,3vw,1.9rem); font-weight:300;
+  margin:0 0 var(--space-sm);
+}
+.handoff__lede{ color:var(--fg-muted); margin:0 0 var(--space-lg); font-size:.98rem; }
+.handoff .btn{ margin-bottom:var(--space-sm); }
+.handoff__alt{
+  color:var(--fg-dim); margin:var(--space-md) 0 0;
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+  gap:var(--space-sm);
+}
+/* These are the fallbacks for someone whose WhatsApp handoff just failed.
+   They get full 44px targets, not 15px of inline text. */
+.handoff__alt a{
+  color:var(--cyan); text-decoration:none;
+  display:inline-flex; align-items:center;
+  min-height:44px; padding:0 var(--space-sm);
+  border-radius:var(--r-sm);
+  transition:background var(--t) var(--ease);
+}
+.handoff__alt a:hover{ background:rgba(0,242,254,.10); text-decoration:underline; }
+
+.handoff__peek{ margin-top:var(--space-lg); border-top:1px solid var(--line); padding-top:var(--space-md); }
+.handoff__peek summary{
+  color:var(--fg-dim); cursor:pointer; list-style:none;
+  min-height:44px; display:flex; align-items:center;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:.66rem; letter-spacing:.16em;
+  transition:color var(--t) var(--ease);
+}
+.handoff__peek summary::-webkit-details-marker{ display:none; }
+.handoff__peek summary::before{ content:'+'; margin-right:10px; color:var(--cyan); }
+.handoff__peek[open] summary::before{ content:'–'; }
+.handoff__peek summary:hover{ color:var(--fg); }
+.handoff__peek pre{
+  margin:0; padding:var(--space-md);
+  background:rgba(0,0,0,.28); border:1px solid var(--line); border-radius:var(--r-sm);
+  color:var(--fg-muted); font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:.74rem; line-height:1.75;
+  white-space:pre-wrap; word-break:break-word;
+  max-height:240px; overflow-y:auto;
+}
+.handoff__back{
+  display:block; width:100%; min-height:44px; margin-top:var(--space-md);
+  background:none; border:0; cursor:pointer; color:var(--fg-dim);
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:.66rem; letter-spacing:.16em; text-transform:uppercase;
+  transition:color var(--t) var(--ease);
+}
+.handoff__back:hover{ color:var(--fg); }
 
 /* ═══════════════════════════ FOOTER ═════════════════════════════════ */
 .footer{

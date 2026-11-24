@@ -27,6 +27,13 @@
      (shown on the studio card); swap the digits here to reroute leads. */
   var WA_NUMBER = '919060905030';
 
+  /* OPTIONAL lead-capture endpoint. Empty = WhatsApp handoff only, which works
+     but cannot be counted: you only learn about enquiries people actually send.
+     Paste a Formspree / Netlify Forms / Google Apps Script URL here and every
+     submission is POSTed as JSON before the handoff, so a visitor who abandons
+     at the WhatsApp step is still recorded. See README.md > Lead capture. */
+  var FORM_ENDPOINT = '';
+
   var DEST = window.AJScene.destinations;
   var inr = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
   var money = function (n) { return '₹' + inr.format(Math.round(n)); };
@@ -419,32 +426,124 @@
     if (firstBad) {                      /* ux: focus-management */
       firstBad.focus();
       note.classList.remove('is-ok');
+      note.classList.add('is-bad');
       note.textContent = '◦ FIX THE HIGHLIGHTED FIELDS AND SEND AGAIN';
       return;
     }
+    note.classList.remove('is-bad');
 
     var pick = render();
-    var msg =
-      'New enquiry via ajholidays.in\n' +
-      '—\n' +
-      'Name: ' + $('#fName').value.trim() + '\n' +
-      'Phone: ' + $('#fPhone').value.trim() + '\n' +
-      'Email: ' + ($('#fMail').value.trim() || '—') + '\n' +
-      'Interest: ' + ($('#fDest').value.trim() || pick.d.name) + '\n' +
-      '—\n' +
-      'Builder: ' + state.nights + 'N · ' + state.pax + ' pax · ' +
-        state.style + ' · ' + state.pace + ' pace\n' +
-      'Budget line: ' + money(state.budget) + ' pp\n' +
-      'Suggested: ' + pick.d.name + ' — ' + money(pick.est) + ' pp (' + pick.fit + '% fit)\n' +
-      '—\n' +
-      'Brief: ' + ($('#fMsg').value.trim() || '—');
+    var lead = {
+      name:        $('#fName').value.trim(),
+      phone:       $('#fPhone').value.trim(),
+      email:       $('#fMail').value.trim(),
+      interest:    $('#fDest').value.trim() || pick.d.name,
+      nights:      state.nights,
+      pax:         state.pax,
+      style:       state.style,
+      pace:        state.pace,
+      budget_pp:   state.budget,
+      suggested:   pick.d.name,
+      estimate_pp: pick.est,
+      fit_pct:     pick.fit,
+      brief:       $('#fMsg').value.trim(),
+      source:      'ajholiday.in',
+      sent_at:     new Date().toISOString()
+    };
 
-    note.classList.add('is-ok');
-    note.textContent = '◦ OPENING WHATSAPP WITH YOUR BRIEF — SEND IT TO REACH THE DESK';
-    window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+    var msg =
+      'New enquiry via ajholiday.in\n' +
+      '—\n' +
+      'Name: ' + lead.name + '\n' +
+      'Phone: ' + lead.phone + '\n' +
+      'Email: ' + (lead.email || '—') + '\n' +
+      'Interest: ' + lead.interest + '\n' +
+      '—\n' +
+      'Builder: ' + lead.nights + 'N · ' + lead.pax + ' pax · ' +
+        lead.style + ' · ' + lead.pace + ' pace\n' +
+      'Budget line: ' + money(lead.budget_pp) + ' pp\n' +
+      'Suggested: ' + lead.suggested + ' — ' + money(lead.estimate_pp) +
+        ' pp (' + lead.fit_pct + '% fit)\n' +
+      '—\n' +
+      'Brief: ' + (lead.brief || '—');
+
+    /* Capture the lead server-side first when an endpoint is configured, so a
+       visitor who never completes the WhatsApp handoff is still recorded.
+       Fire-and-forget: a failed POST must never block the handoff. */
+    if (FORM_ENDPOINT) {
+      try {
+        fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(lead)
+        }).catch(function () { /* handoff continues regardless */ });
+      } catch (err) { /* same */ }
+    }
+
+    showHandoff(msg);
+  });
+
+  /* ═════════════════════════ HANDOFF PANEL ══════════════════════════ */
+  /* The old flow called window.open() and immediately claimed success. When a
+     popup blocker intercepted it (routine on mobile Safari and Chrome) the
+     visitor was told their enquiry had been sent and it had not. A lost lead
+     looked identical to no lead. The send is now an anchor the visitor clicks,
+     which cannot be blocked, and nothing claims to have been sent. */
+  var handoff     = $('#handoff');
+  var handoffWa   = $('#handoffWa');
+  var handoffMsg  = $('#handoffMsg');
+  var handoffCopy = $('#handoffCopy');
+  var handoffBack = $('#handoffBack');
+
+  function showHandoff(msg) {
+    handoffWa.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+    handoffMsg.textContent = msg;
+    handoffCopy.querySelector('span').textContent = 'Copy the message instead';
+
+    form.hidden = true;
+    handoff.hidden = false;
+    handoff.classList.add('is-in');
+    handoff.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'center' });
+    handoff.focus({ preventScroll: true });
+  }
+
+  handoffCopy.addEventListener('click', function () {
+    var label = handoffCopy.querySelector('span');
+    var text  = handoffMsg.textContent;
+
+    function ok()   { label.textContent = 'Copied — paste it to us on WhatsApp'; }
+    function fail() { label.textContent = 'Press and hold the message below to copy'; handoff.querySelector('.handoff__peek').open = true; }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok, fail);
+    } else {
+      /* Older iOS Safari and any non-secure context land here. */
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;top:-1000px;opacity:0;';
+        document.body.appendChild(ta);
+        ta.select();
+        var done = document.execCommand('copy');
+        document.body.removeChild(ta);
+        done ? ok() : fail();
+      } catch (err) { fail(); }
+    }
+  });
+
+  handoffBack.addEventListener('click', function () {
+    handoff.hidden = true;
+    form.hidden = false;
+    note.classList.remove('is-ok', 'is-bad');
+    note.textContent = '◦ WE REPLY WITHIN ONE WORKING DAY · MON–SAT';
+    $('#fName').focus();
   });
 
   $('#boSend').addEventListener('click', function () {
+    /* If the visitor already submitted once, put the form back before sending
+       them to it — otherwise they arrive at a hidden form. */
+    if (!handoff.hidden) { handoff.hidden = true; form.hidden = false; }
     $('#contact').scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' });
     var pick = render();
     $('#fDest').value = pick.d.name + ' — ' + state.nights + 'N, ' + state.pax + ' pax';

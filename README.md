@@ -73,8 +73,40 @@ Both are gone. `index.html` carries a comment at the old stats location showing
 how to restore the row once you have numbers you can stand behind; the CSS and
 the `[data-count]` JS counter are still in place, so real figures need no new code.
 
-The contact form has **no backend**. Submitting composes a pre-filled WhatsApp message and
-opens `wa.me`. Wire it to a real endpoint (or Formspree/Netlify Forms) before launch.
+## Lead capture
+
+Submitting the form shows a **handoff panel**: the composed WhatsApp message, a send
+button, a copy button, and phone/email fallbacks.
+
+This replaced an earlier flow that called `window.open()` and immediately announced
+success. When a popup blocker intercepted that call — routine on mobile Safari and
+Chrome — the visitor was told their enquiry had been sent when it had not, and the lead
+was lost silently. A lost lead looked exactly like no lead. The send is now an anchor the
+visitor clicks, which no blocker can intercept, and nothing claims to have been sent.
+
+**Optional: capture leads you can count.** The WhatsApp handoff works, but you only ever
+learn about enquiries people actually complete. To record every submission, set
+`FORM_ENDPOINT` in `assets/js/app.js`:
+
+```js
+var FORM_ENDPOINT = 'https://formspree.io/f/xxxxxxxx';
+```
+
+Each submission is then POSTed as JSON before the handoff:
+
+```json
+{ "name": "...", "phone": "...", "email": "...", "interest": "...",
+  "nights": 6, "pax": 2, "style": "beach", "pace": "balanced",
+  "budget_pp": 75000, "suggested": "Bali", "estimate_pp": 68999,
+  "fit_pct": 94, "brief": "...", "source": "ajholiday.in", "sent_at": "ISO-8601" }
+```
+
+The POST is fire-and-forget: a dead or misconfigured endpoint can never block the
+handoff. Verified by pointing it at an unresolvable host and confirming the panel still
+appeared with the correct WhatsApp link.
+
+Any service accepting a JSON POST works — Formspree, Netlify Forms, or a Google Apps
+Script web app bound to a Sheet (free, no signup beyond your Google account).
 
 ---
 
